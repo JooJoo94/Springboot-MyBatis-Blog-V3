@@ -4,9 +4,17 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cos.blog.repository.UserRepository">
 
-	<select id="findAll" resultType="com.cos.blog.model.User">
+	<select id="findAll" resultType="com.cos.blog.model.user.User">
 		select * from user order by id desc
 	</select>
 
+	<insert id="save">
+		insert into user(username, password, email, createDate) 
+		values(#{username}, #{password}, #{email}, now())
+	</insert>
+	
+	<select id="findByUsername" resultType="int">
+		select count(*) from user where username = #{username}
+	</select>
 
 </mapper>
