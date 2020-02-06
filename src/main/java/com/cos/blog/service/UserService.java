@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cos.blog.model.RespCode;
+import com.cos.blog.model.ReturnCode;
 import com.cos.blog.model.user.dto.ReqJoinDto;
 import com.cos.blog.repository.UserRepository;
 
@@ -21,12 +21,13 @@ public class UserService {
 			int result = userRepository.findByUsername(dto.getUsername());
 			
 			if(result == 1) {
-				return RespCode.아이디중복;
+				return ReturnCode.아이디중복;
 			}else {
 				return userRepository.save(dto);
 			}
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new RuntimeException();
 		}
 	}
