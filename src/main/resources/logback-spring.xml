@@ -25,7 +25,7 @@
 	<root level="INFO">
     	<appender-ref ref="STDOUT" />
     </root>
-    
+
     <logger name="com.cos.blog.aop.warn" level="WARN">
         <appender-ref ref="FILE" />
     </logger>

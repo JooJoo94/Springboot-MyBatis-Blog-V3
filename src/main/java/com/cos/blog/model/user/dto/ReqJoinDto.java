@@ -14,9 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReqJoinDto {
 	
-
-	@Pattern(regexp = "^[a-zA-Z0-9]*$", message = "한글입력불가")
-	@Size(min = 7, max=15, message = "유저네임의 길이가 잘못되었습니다.")
+	@Size(max=15, message = "유저네임의 길이가 잘못되었습니다.")
 	@NotBlank(message = "유저네임을 입력하세요.")
 	private String username;
 	

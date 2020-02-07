@@ -22,7 +22,7 @@ public class BindingAdvice {
 	
 	@Around("execution(* com.cos.blog.controller..*Controller.*(..))")
 	public Object bindingPrint(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-
+		
 		String type = proceedingJoinPoint.getSignature().getDeclaringTypeName();
 
 		Object[] args = proceedingJoinPoint.getArgs();

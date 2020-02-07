@@ -1,15 +1,19 @@
 package com.cos.blog.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cos.blog.controller.UserController;
 import com.cos.blog.model.ReturnCode;
 import com.cos.blog.model.user.dto.ReqJoinDto;
 import com.cos.blog.repository.UserRepository;
 
 @Service
 public class UserService {
+	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
 	private UserRepository userRepository;
@@ -27,7 +31,6 @@ public class UserService {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new RuntimeException();
 		}
 	}
