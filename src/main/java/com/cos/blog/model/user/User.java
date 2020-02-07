@@ -2,6 +2,7 @@ package com.cos.blog.model.user;
 
 import java.sql.Timestamp;
 
+// MaBatis에서 ResultType으로 담을 때 생성자 혹은 Setter중 무엇이 호출되는지 확인 후 Lombok 변경
 public class User {
 	private int id;
 	private String username;
