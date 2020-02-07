@@ -50,7 +50,7 @@
 				}
 			}
 		}).fail(function(r){
-			alert('회원가입 실패');
+			alert('서버 오류');
 		});
 	});
 </script>
