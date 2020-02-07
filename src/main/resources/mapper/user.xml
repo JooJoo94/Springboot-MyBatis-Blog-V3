@@ -17,4 +17,8 @@
 		select count(*) from user where username = #{username}
 	</select>
 
+	<select id="findByUsernameAndPassword" resultType="com.cos.blog.model.user.User">
+		select id, username, email, profile from user where username = #{username} and password = #{password}
+	</select>
+
 </mapper>
