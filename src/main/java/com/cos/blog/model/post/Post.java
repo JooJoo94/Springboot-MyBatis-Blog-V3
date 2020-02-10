@@ -3,10 +3,10 @@ package com.cos.blog.model.post;
 import java.sql.Timestamp;
 
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Getter
+@Data
 @NoArgsConstructor
 public class Post {
 	private int id;
@@ -16,11 +16,10 @@ public class Post {
 	private Timestamp createDate;
 	
 	@Builder
-	public Post(String title, String content, int userId, Timestamp createDate) {
+	public Post(String title, String content, int userId) {
 		this.title = title;
 		this.content = content;
 		this.userId = userId;
-		this.createDate = createDate;
 	}
 	
 }
