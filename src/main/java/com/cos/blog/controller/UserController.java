@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cos.blog.model.RespCM;
@@ -74,8 +75,9 @@ public class UserController {
 	
 	}
 	
+	// form:form 사용함!!
 	@PutMapping("/user/profile")
-	public ResponseEntity<?> profile(
+	public @ResponseBody String profile(
 			@RequestParam int id, 
 			@RequestParam String password,
 			@RequestParam MultipartFile profile){
@@ -93,10 +95,19 @@ public class UserController {
 		
 		int result = userService.수정완료(id, password, uuidFilename);
 		
+		StringBuffer sb = new StringBuffer();
 		if(result == 1) {
-			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
+			sb.append("<script>");
+			sb.append("alert('수정완료');");
+			sb.append("location.href='/';");
+			sb.append("</script>");
+			return sb.toString();
 		}else {
-			return new ResponseEntity<RespCM>(new RespCM(500, "fail"), HttpStatus.BAD_REQUEST);
+			sb.append("<script>");
+			sb.append("alert('수정실패');");
+			sb.append("history.back();");
+			sb.append("</script>");
+			return sb.toString();
 		}	
 
 	}

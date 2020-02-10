@@ -1,14 +1,1 @@
-[2020-02-07 09:37:46:252230][http-nio-8080-exec-1] WARN  com.cos.blog.aop.warn.BindingAdvice - com.cos.blog.controller.UserController.join() => 필드 : username 경고 : 유저네임을 입력하세요.
-[2020-02-07 09:38:21:286946][http-nio-8080-exec-1] WARN  com.cos.blog.aop.warn.BindingAdvice - com.cos.blog.controller.UserController.join() => 필드 : username 경고 : 유저네임을 입력하세요.
-[2020-02-07 09:39:44:369898][http-nio-8080-exec-1] WARN  com.cos.blog.aop.warn.BindingAdvice - com.cos.blog.controller.UserController.join() => 필드 : password 경고 : 패스워드의 길이가 잘못되었습니다.
-[2020-02-07 09:39:44:369899][http-nio-8080-exec-1] WARN  com.cos.blog.aop.warn.BindingAdvice - com.cos.blog.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
-[2020-02-07 09:39:44:369900][http-nio-8080-exec-1] WARN  com.cos.blog.aop.warn.BindingAdvice - com.cos.blog.controller.UserController.join() => 필드 : username 경고 : 유저네임을 입력하세요.
-[2020-02-07 16:35:57:50195][http-nio-8080-exec-5] WARN  com.cos.blog.aop.warn.BindingAdvice - com.cos.blog.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
-[2020-02-07 16:37:11:124280][http-nio-8080-exec-6] WARN  com.cos.blog.aop.warn.BindingAdvice - com.cos.blog.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
-[2020-02-07 16:37:20:133233][http-nio-8080-exec-9] WARN  com.cos.blog.aop.warn.BindingAdvice - com.cos.blog.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
-[2020-02-07 16:38:05:178040][http-nio-8080-exec-3] WARN  com.cos.blog.aop.warn.BindingAdvice - com.cos.blog.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
-[2020-02-07 16:38:25:197743][http-nio-8080-exec-7] WARN  com.cos.blog.aop.warn.BindingAdvice - com.cos.blog.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
-[2020-02-07 16:38:35:207975][http-nio-8080-exec-1] WARN  com.cos.blog.aop.warn.BindingAdvice - com.cos.blog.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
-[2020-02-07 16:38:49:222305][http-nio-8080-exec-5] WARN  com.cos.blog.aop.warn.BindingAdvice - com.cos.blog.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
-[2020-02-07 16:39:07:240168][http-nio-8080-exec-7] WARN  com.cos.blog.aop.warn.BindingAdvice - com.cos.blog.controller.UserController.join() => 필드 : username 경고 : 유저네임에 한글이 입력될 수 없습니다.
-[2020-02-07 16:39:07:240168][http-nio-8080-exec-7] WARN  com.cos.blog.aop.warn.BindingAdvice - com.cos.blog.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
+[2020-02-10 14:00:48:55273][http-nio-8080-exec-2] WARN  com.cos.blog.aop.warn.BindingAdvice - com.cos.blog.controller.UserController.login() => 필드 : password 경고 : 패스워드를 입력하세요.
