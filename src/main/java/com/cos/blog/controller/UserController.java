@@ -1,9 +1,16 @@
 package com.cos.blog.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,8 +18,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cos.blog.model.RespCM;
 import com.cos.blog.model.ReturnCode;
@@ -23,6 +32,9 @@ import com.cos.blog.service.UserService;
 
 @Controller
 public class UserController {
+	
+	@Value("${file.path}")
+	private String fileRealPath;  // 서버에 배포하면 경로 변경해야함.
 	
 	@Autowired
 	private UserService userService;
@@ -52,6 +64,7 @@ public class UserController {
 		
 		User principal = (User) session.getAttribute("principal");
 		
+		System.out.println("UserController : profile :  "+principal.getProfile());
 		if(principal.getId() == id) {
 			return "/user/profile";
 		}else {
@@ -59,6 +72,33 @@ public class UserController {
 			return "/user/login";
 		}
 	
+	}
+	
+	@PutMapping("/user/profile")
+	public ResponseEntity<?> profile(
+			@RequestParam int id, 
+			@RequestParam String password,
+			@RequestParam MultipartFile profile){
+		
+		UUID uuid = UUID.randomUUID();
+		String uuidFilename = uuid+"_"+profile.getOriginalFilename();
+		
+		// nio 객체!!
+		Path filePath = Paths.get(fileRealPath+uuidFilename);
+		try {
+			Files.write(filePath, profile.getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		int result = userService.수정완료(id, password, uuidFilename);
+		
+		if(result == 1) {
+			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
+		}else {
+			return new ResponseEntity<RespCM>(new RespCM(500, "fail"), HttpStatus.BAD_REQUEST);
+		}	
+
 	}
 	
 	// 메시지 컨버터(Jackson Mapper)는 request받을 때 setter로 호출한다.

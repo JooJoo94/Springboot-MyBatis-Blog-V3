@@ -1,12 +1,11 @@
 package com.cos.blog.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cos.blog.controller.UserController;
 import com.cos.blog.model.ReturnCode;
 import com.cos.blog.model.user.User;
 import com.cos.blog.model.user.dto.ReqJoinDto;
@@ -15,10 +14,12 @@ import com.cos.blog.repository.UserRepository;
 
 @Service
 public class UserService {
-	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private HttpSession session;
 	
 	// result = 0 비정상, 1 정상, -1 DB 오류, -2 아이디 중복
 	@Transactional
@@ -40,5 +41,21 @@ public class UserService {
 	public User 로그인(ReqLoginDto dto) {
 		return userRepository.findByUsernameAndPassword(dto);
 	}
+	
+	public int 수정완료(int id, String password, String profile) {
+		
+		int result = userRepository.update(id, password, profile);
+		
+		if(result == 1) { // 수정 성공
+			User user = userRepository.findById(id);
+			session.setAttribute("principal", user);
+			
+			return 1;
+		}else { // 수정 실패
+			return -1;
+		}
+	}
+	
+
 	
 }
