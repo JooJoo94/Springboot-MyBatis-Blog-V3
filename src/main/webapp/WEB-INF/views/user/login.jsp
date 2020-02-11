@@ -39,6 +39,7 @@
 			alert("로그인 성공");
 			location.href = '/';
 		}).fail(function(r){
+			console.log(r);
 			alert("로그인 실패");
 		});
 	});

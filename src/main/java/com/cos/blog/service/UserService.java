@@ -1,7 +1,5 @@
 package com.cos.blog.service;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +16,9 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private MyUserDetailService userDetailService;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -48,8 +49,9 @@ public class UserService {
 		return userRepository.findByUsernameAndPassword(dto);
 	}
 	
-	public int 수정완료(int id, String password, String profile, User principal) {
+	public int 수정완료(int id, String password, String profile) {
 		
+		User principal = userDetailService.getPrincipal();
 		String encodePassword = passwordEncoder.encode(password);
 		int result = userRepository.update(id, encodePassword, profile);
 		

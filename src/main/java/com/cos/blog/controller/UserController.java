@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,6 @@ import com.cos.blog.model.RespCM;
 import com.cos.blog.model.ReturnCode;
 import com.cos.blog.model.user.User;
 import com.cos.blog.model.user.dto.ReqJoinDto;
-import com.cos.blog.model.user.dto.ReqLoginDto;
 import com.cos.blog.service.UserService;
 import com.cos.blog.util.Script;
 
@@ -72,8 +70,9 @@ public class UserController {
 	public @ResponseBody String profile(
 			@RequestParam int id, 
 			@RequestParam String password,
-			@RequestParam MultipartFile profile, 
-			@AuthenticationPrincipal User principal){
+			@RequestParam MultipartFile profile){
+		
+		
 		
 		UUID uuid = UUID.randomUUID();
 		String uuidFilename = uuid+"_"+profile.getOriginalFilename();
@@ -86,7 +85,7 @@ public class UserController {
 			e.printStackTrace();
 		}
 		
-		int result = userService.수정완료(id, password, uuidFilename, principal);
+		int result = userService.수정완료(id, password, uuidFilename);
 		
 		if(result == 1) {
 			return Script.href("수정완료", "/");
