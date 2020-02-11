@@ -43,11 +43,18 @@
 			</div>
 			
 			<ul id="comment--items" class="list-group">
-				<li id="comment--item--1" class="list-group-item d-flex justify-content-between align-items-center"> 
-					<div class="font-italic">첫번째 댓글입니다.</div>
-					<div class="badge badge-warning badge-pill ml-auto">작성자:COS</div>
-					<button onclick="commentDelete(1)" class="badge badge-danger badge-pill">삭제</button>
-				</li>
+			
+				<c:forEach var="comment" items="${comments}">
+					<li id="comment--item--${comment.id}" class="list-group-item d-flex justify-content-between align-items-center"> 
+						<div class="font-italic">${comment.content}</div>
+						<div class="badge badge-light badge-pill ml-auto">${comment.username}</div>
+						
+						<c:if test="${comment.userId eq sessionScope.principal.id}">
+							<button onclick="commentDelete(${comment.id})" class="badge badge-secondary badge-pill">삭제</button>
+						</c:if>
+					</li>
+				</c:forEach>
+				
 			</ul>
 
 		</div>

@@ -15,7 +15,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-	<nav class="navbar navbar-expand-md bg-info navbar-dark">
+	<nav class="navbar navbar-expand-md bg-primary navbar-dark">
 		<!-- Brand -->
 		<a class="navbar-brand" href="/">Cos</a>
 
@@ -50,7 +50,7 @@
 
 			</ul>
 			<img src="/media/${sessionScope.principal.profile}"  class="rounded-circle my__img ml-auto" 
-			     width="30px" height="30px" onerror="javascript:this.src = '/images/unknown.jpg' " />
+			     width="40px" height="40px" onerror="javascript:this.src = '/images/unknown.jpg' " />
 		</div>
 	</nav>
 	<br />

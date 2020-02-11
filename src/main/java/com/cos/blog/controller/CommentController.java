@@ -20,40 +20,35 @@ public class CommentController {
 
 	@Autowired
 	private CommentService commentService;
-	
+
 	@PostMapping("/comment/write")
 	public ResponseEntity<?> write(@RequestBody ReqDetailDto dto) {
-		
+
 		RespDetailDto comment = commentService.댓글쓰기(dto);
-		
-		if(comment != null) {
+
+		if (comment != null) {
 			comment.setStatus(new RespCM(200, "ok"));
 			return new ResponseEntity<RespDetailDto>(comment, HttpStatus.OK);
-		}else {
+		} else {
 			RespDetailDto error = new RespDetailDto();
 			error.setStatus(new RespCM(400, "fail"));
 			return new ResponseEntity<RespDetailDto>(error, HttpStatus.BAD_REQUEST);
-		}	
+		}
 	}
-	
+
 	@DeleteMapping("/comment/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable int id) {
-		
+
 		int result = commentService.댓글삭제(id);
-		
-		if(result == 1) {
+
+		if (result == 1) {
 			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
-		}else {
+		} else if (result == -3) {
+			return new ResponseEntity<RespCM>(new RespCM(403, "fail"), HttpStatus.FORBIDDEN);
+		} else {
 			return new ResponseEntity<RespCM>(new RespCM(400, "fail"), HttpStatus.BAD_REQUEST);
 		}
-		
+
 	}
-	
+
 }
-
-
-
-
-
-
-
