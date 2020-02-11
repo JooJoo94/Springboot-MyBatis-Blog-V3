@@ -31,9 +31,9 @@
 
 		$.ajax({
 			type: 'POST',
-			url: '/user/login',
-			data: JSON.stringify(data),
-			contentType : 'application/json; charset=utf-8',
+			url: '/user/loginProc',
+			data: data,  // username=ssar&password=1234
+			contentType : 'application/x-www-form-urlencoded',
 			dataType : 'json'
 		}).done(function(r){
 			alert("로그인 성공");

@@ -13,7 +13,7 @@
 		</div>
 		<div class="card-footer">
 
-			<c:if test="${post.userId eq sessionScope.principal.id}">
+			<c:if test="${post.userId eq principal.id}">
 				<a href="/post/update/${post.id}" class="btn btn-warning">수정</a>
 				<button id="post--delete--submit" value="${post.id}" class="btn btn-danger">삭제</button>
 			</c:if>
@@ -26,7 +26,7 @@
 	<div class="card">
 		<div class="form-group">
 			<div class="card-body">
-				<input type="hidden" id="postId" value="${post.id}" /> <input type="hidden" id="userId" value="${sessionScope.principal.id}" />
+				<input type="hidden" id="postId" value="${post.id}" /> <input type="hidden" id="userId" value="${principal.id}" />
 				<textarea class="form-control" rows="2" id="content"></textarea>
 			</div>
 			<div class="card-footer">
@@ -41,7 +41,7 @@
 			<div class="card-header">
 				<h4 class="card-title">댓글 리스트</h4>
 			</div>
-			
+			 
 			<ul id="comment--items" class="list-group">
 			
 				<c:forEach var="comment" items="${comments}">

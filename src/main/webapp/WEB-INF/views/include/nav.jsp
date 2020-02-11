@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<sec:authorize access="isAuthenticated()">
+    <sec:authentication property="principal" var="principal" />
+</sec:authorize>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,15 +35,15 @@
 			<ul class="navbar-nav">
 
 				<c:choose>
-					<c:when test="${not empty sessionScope.principal}">
+					<c:when test="${not empty principal}">
 						<li class="nav-item">
 						<a class="nav-link" href="/post/write">글쓰기</a></li>
 
 						<li class="nav-item">
-						<a class="nav-link" href="/user/profile/${sessionScope.principal.id}">회원정보수정</a></li>
+						<a class="nav-link" href="/user/profile/${principal.id}">회원정보수정</a></li>
 						
 						<li class="nav-item">
-						<a class="nav-link" href="/user/logout">로그아웃</a></li>
+						<a class="nav-link" href="/logout">로그아웃</a></li>
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item">
@@ -49,7 +55,7 @@
 				</c:choose>
 
 			</ul>
-			<img src="/media/${sessionScope.principal.profile}"  class="rounded-circle my__img ml-auto" 
+			<img src="/media/${principal.profile}"  class="rounded-circle my__img ml-auto" 
 			     width="40px" height="40px" onerror="javascript:this.src = '/images/unknown.jpg' " />
 		</div>
 	</nav>

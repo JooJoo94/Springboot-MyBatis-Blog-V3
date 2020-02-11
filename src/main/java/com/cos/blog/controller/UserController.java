@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,9 +42,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@Autowired
-	private HttpSession session;
-	
 	@GetMapping("/user/join")
 	public String join() {
 		return "/user/join";
@@ -53,18 +51,11 @@ public class UserController {
 	public String login() {
 		return "/user/login";
 	}
-
-	@GetMapping("/user/logout")
-	public String logout() {
-		session.invalidate();
-		return "redirect:/";
-	}
 	
 	// 인증, 동일인 체크
 	@GetMapping("/user/profile/{id}")
-	public  String profile(@PathVariable int id) {
-		
-		User principal = (User) session.getAttribute("principal");
+	public  String profile(@PathVariable int id,
+			@AuthenticationPrincipal User principal) {
 		
 		System.out.println("UserController : profile :  "+principal.getProfile());
 		if(principal.getId() == id) {
@@ -81,7 +72,8 @@ public class UserController {
 	public @ResponseBody String profile(
 			@RequestParam int id, 
 			@RequestParam String password,
-			@RequestParam MultipartFile profile){
+			@RequestParam MultipartFile profile, 
+			@AuthenticationPrincipal User principal){
 		
 		UUID uuid = UUID.randomUUID();
 		String uuidFilename = uuid+"_"+profile.getOriginalFilename();
@@ -94,7 +86,7 @@ public class UserController {
 			e.printStackTrace();
 		}
 		
-		int result = userService.수정완료(id, password, uuidFilename);
+		int result = userService.수정완료(id, password, uuidFilename, principal);
 		
 		if(result == 1) {
 			return Script.href("수정완료", "/");
@@ -107,7 +99,6 @@ public class UserController {
 	// 메시지 컨버터(Jackson Mapper)는 request받을 때 setter로 호출한다.
 	@PostMapping("/user/join")
 	public ResponseEntity<?> join(@Valid @RequestBody ReqJoinDto dto, BindingResult bindingResult) {
-		
 		int result = userService.회원가입(dto);
 		
 		if(result == ReturnCode.아이디중복) {
@@ -119,25 +110,6 @@ public class UserController {
 		}	
 	}
 	
-	@PostMapping("/user/login")
-	public ResponseEntity<?> login(
-			@Valid @RequestBody ReqLoginDto dto, 
-			BindingResult bindingResult
-			) {
-		
-		// request 검증 = AOP로 처리할 예정
-		
-		// 서비스 호출
-		User principal = userService.로그인(dto);
-
-		if(principal != null) {
-			session.setAttribute("principal", principal);
-			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
-		}else {
-			return new ResponseEntity<RespCM>(new RespCM(400, "fail"), HttpStatus.BAD_REQUEST);
-		}
-		
-	}
 }
 
 

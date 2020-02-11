@@ -8,6 +8,8 @@ $('#join--submit').on('click', function() {
 		password : $('#password').val(),
 		email : $('#email').val()
 	};
+	
+	
 
 	$.ajax({
 		type : 'POST',

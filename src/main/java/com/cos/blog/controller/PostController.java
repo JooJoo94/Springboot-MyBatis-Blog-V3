@@ -1,10 +1,9 @@
 package com.cos.blog.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,9 +24,6 @@ import com.cos.blog.service.PostService;
 
 @Controller
 public class PostController {
-
-	@Autowired
-	private HttpSession session;
 	
 	@Autowired
 	private PostService postService;
@@ -57,9 +53,9 @@ public class PostController {
 	
 	// 인증 체크
 	@PostMapping("/post/write")
-	public ResponseEntity<?> write(@RequestBody ReqWriteDto dto) {
+	public ResponseEntity<?> write(@RequestBody ReqWriteDto dto,
+			@AuthenticationPrincipal User principal) {
 		
-		User principal = (User) session.getAttribute("principal");
 		dto.setUserId(principal.getId());
 		
 		int result = postService.글쓰기(dto);
@@ -84,9 +80,10 @@ public class PostController {
 	}
 	
 	@DeleteMapping("/post/delete/{id}")
-	public ResponseEntity<?> delete(@PathVariable int id){
+	public ResponseEntity<?> delete(@PathVariable int id, 
+			@AuthenticationPrincipal User principal){
 		
-		int result = postService.삭제하기(id);
+		int result = postService.삭제하기(id, principal);
 		
 		if(result == 1) {
 			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);	
@@ -100,19 +97,21 @@ public class PostController {
 	
 	// 인증 체크, 동일인 체크
 	@GetMapping("/post/update/{id}")
-	public String update(@PathVariable int id, Model model) {
+	public String update(@PathVariable int id, Model model, 
+			@AuthenticationPrincipal User principal) {
 		
 		// postId 로 select 해서 post 가져오기 필요 - Model에 담기 필요
-		model.addAttribute("post", postService.수정하기(id));
+		model.addAttribute("post", postService.수정하기(id, principal));
 			
 		return "/post/update";
 	}
 	
 	
 	@PutMapping("/post/update")
-	public ResponseEntity<?> update(@RequestBody ReqUpdateDto dto){
+	public ResponseEntity<?> update(@RequestBody ReqUpdateDto dto, 
+			@AuthenticationPrincipal User principal){
 		
-		int result = postService.수정완료(dto);
+		int result = postService.수정완료(dto, principal);
 		
 		if(result == 1) {
 			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);	
